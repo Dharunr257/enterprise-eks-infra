@@ -73,12 +73,15 @@ module "eks" {
 
   cluster_security_group_id = module.security_group.cluster_security_group_id
 
+  # Control plane can use all subnets
   cluster_subnet_ids = concat(
     module.vpc.public_subnet_ids,
     module.vpc.private_subnet_ids
   )
 
-  node_subnet_ids = module.vpc.private_subnet_ids
+  # Worker nodes use PUBLIC subnets for this portfolio implementation
+  # to avoid NAT Gateway costs while staying within AWS Free Tier.
+  node_subnet_ids = module.vpc.public_subnet_ids
 
   ##################################
   # Node Group

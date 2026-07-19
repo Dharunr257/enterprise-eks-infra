@@ -47,12 +47,12 @@ resource "aws_security_group" "eks_nodes" {
 }
 
 ##################################################
-# Cluster -> Node
+# Cluster -> Node (Egress)
 ##################################################
 
 resource "aws_security_group_rule" "cluster_to_nodes" {
 
-  type                     = "egress"
+  type = "egress"
 
   from_port = 0
   to_port   = 0
@@ -62,6 +62,25 @@ resource "aws_security_group_rule" "cluster_to_nodes" {
   security_group_id = aws_security_group.eks_cluster.id
 
   source_security_group_id = aws_security_group.eks_nodes.id
+
+}
+
+##################################################
+# Cluster -> Node (Ingress)
+##################################################
+
+resource "aws_security_group_rule" "cluster_to_nodes_ingress" {
+
+  type = "ingress"
+
+  from_port = 1025
+  to_port   = 65535
+
+  protocol = "tcp"
+
+  security_group_id = aws_security_group.eks_nodes.id
+
+  source_security_group_id = aws_security_group.eks_cluster.id
 
 }
 
