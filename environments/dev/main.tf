@@ -67,6 +67,9 @@ module "eks" {
   cluster_role_arn = module.iam.cluster_role_arn
   node_role_arn    = module.iam.node_role_arn
 
+  # EKS Pod Identity Role for EBS CSI Driver
+  ebs_csi_role_arn = module.iam.ebs_csi_role_arn
+
   ##################################
   # Networking
   ##################################

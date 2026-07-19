@@ -18,6 +18,11 @@ variable "node_role_arn" {
   type        = string
 }
 
+variable "ebs_csi_role_arn" {
+  description = "IAM Role ARN for the EBS CSI Driver (EKS Pod Identity)"
+  type        = string
+}
+
 variable "cluster_subnet_ids" {
   description = "Subnets used by EKS Control Plane"
   type        = list(string)
@@ -44,17 +49,17 @@ variable "instance_types" {
 
 variable "desired_size" {
   type    = number
-  default = 1
+  default = 3
 }
 
 variable "min_size" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "max_size" {
   type    = number
-  default = 2
+  default = 4
 }
 
 variable "cluster_version" {
